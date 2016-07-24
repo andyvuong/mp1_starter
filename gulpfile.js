@@ -1,8 +1,8 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var gls = require('gulp-live-server');
-var server = gls.new('app.js');
-var runSequence = require('run-sequence');
+var uglify = require('gulp-uglify');
+var server = require('gulp-webserver');
+var clean = require('gulp-clean');
 
 gulp.task('sass', function () {
     gulp.src('source_sass/*.scss')
@@ -10,18 +10,28 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('public/css/'));
 });
 
-// Watch task
+gulp.task('clean-scripts', function () {
+  return gulp.src('public/js/*.js', {read: false})
+    .pipe(clean());
+});
+
+gulp.task('js', ['clean-scripts'], function() {
+  gulp.src('source_js/*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('public/js/'))
+});
+
+gulp.task('serve', function () {
+    gulp.src('./public')
+        .pipe(server({
+            livereload: true,
+            port: 3000,
+        }));
+});
+
 gulp.task('watch', function () {
-    gulp.watch('source_sass/*.scss', ['sass'], function (file) {
-        server.notify.apply(server, [file]);
-    });
+    gulp.watch('source_sass/*.scss', ['sass']);
+    gulp.watch('source_js/*.js', ['js'])
 });
 
-// Server task
-gulp.task('server', function () {
-    server.start();
-});
-
-gulp.task('default', function(callback) {
-    runSequence(['sass', 'server', 'watch'], callback);
-});
+gulp.task('default', ['sass', 'js', 'serve', 'watch']);
