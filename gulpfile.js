@@ -1,17 +1,27 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var gls = require('gulp-live-server');
+var server = gls.new('app.js');
+var runSequence = require('run-sequence');
 
-gulp.task('default', function () {
-  // place code for your default task here
-});
-
-gulp.task('styles', function () {
-    gulp.src('sass/**/*.scss')
+gulp.task('sass', function () {
+    gulp.src('source_sass/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./css/'));
+        .pipe(gulp.dest('public/css/'));
 });
 
-//Watch task
-gulp.task('default', function () {
-    gulp.watch('sass/**/*.scss', ['styles']);
+// Watch task
+gulp.task('watch', function () {
+    gulp.watch('source_sass/*.scss', ['sass'], function (file) {
+        server.notify.apply(server, [file]);
+    });
+});
+
+// Server task
+gulp.task('server', function () {
+    server.start();
+});
+
+gulp.task('default', function(callback) {
+    runSequence(['sass', 'server', 'watch'], callback);
 });
