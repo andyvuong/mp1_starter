@@ -11,8 +11,8 @@ gulp.task('sass', function () {
 });
 
 gulp.task('clean-scripts', function () {
-  return gulp.src('public/js/*.js', {read: false})
-    .pipe(clean());
+    return gulp.src('public/js/*.js', {read: false})
+               .pipe(clean());
 });
 
 gulp.task('js', ['clean-scripts'], function() {
