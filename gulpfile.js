@@ -18,7 +18,7 @@ gulp.task('clean-scripts', function () {
 gulp.task('js', ['clean-scripts'], function() {
   gulp.src('source_js/*.js')
     .pipe(uglify())
-    .pipe(gulp.dest('public/js/'))
+    .pipe(gulp.dest('public/js/'));
 });
 
 gulp.task('serve', function () {
@@ -31,7 +31,7 @@ gulp.task('serve', function () {
 
 gulp.task('watch', function () {
     gulp.watch('source_sass/*.scss', ['sass']);
-    gulp.watch('source_js/*.js', ['js'])
+    gulp.watch('source_js/*.js', ['js']);
 });
 
 gulp.task('default', ['sass', 'js', 'serve', 'watch']);
