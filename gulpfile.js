@@ -6,9 +6,7 @@ var clean = require('gulp-clean');
 
 gulp.task('sass', function () {
     gulp.src('source_sass/*.scss')
-        .pipe(sass({
-            includePaths: ['public/lib/foundation-sites/scss']
-        }).on('error', sass.logError))
+        .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('public/css/'));
 });
 
