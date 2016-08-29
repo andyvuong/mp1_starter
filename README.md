@@ -5,6 +5,11 @@ git clone https://github.com/uiuc-web-programming/mp1_starter.git
 cd mp1_starter
 npm install
 bower install
+gulp build
+```
+
+After this setup, you can run:
+```bash
 gulp
 ```
 
