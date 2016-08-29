@@ -21,6 +21,8 @@ gulp.task('js', ['clean-scripts'], function() {
     .pipe(gulp.dest('public/js/'));
 });
 
+gulp.task('build', ['sass', 'js']);
+
 gulp.task('serve', function () {
     gulp.src('./public')
         .pipe(server({
